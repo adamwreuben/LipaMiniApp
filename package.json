@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack"
   },
   "author": "Adam Reuben",
   "license": "ISC",
@@ -17,7 +19,9 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@gfx/zopfli": "^1.0.15",
     "babel-loader": "^8.2.3",
+    "compression-webpack-plugin": "^9.2.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.10.0",
     "eslint-config-react": "^1.1.7",
@@ -27,6 +31,7 @@
     "html-webpack-plugin": "^5.5.0",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "rimraf": "^3.0.2",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.70.0",
