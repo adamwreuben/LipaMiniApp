@@ -5,6 +5,7 @@ import zlib from 'zlib';
 import CompressionPlugin from 'compression-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import BrotliPlugin from 'brotli-webpack-plugin';
 
 var distFolder = process.cwd()+"/dist";
 
@@ -55,33 +56,47 @@ export default {
       ]
     },
     plugins: [
+      new ESLintPlugin(options),
+        // new CompressionPlugin({
+        //   filename: "[path][base].br",
+        //   algorithm: "brotliCompress",
+        //   test: /\.(js|css|html|svg)$/,
+        //   compressionOptions: {
+        //     params: {
+        //       [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+        //     },
+        //   },
+        //   threshold: 10240,
+        //   minRatio: 0.8,
+        //   deleteOriginalAssets: true,
+        // }),
+
+        // new CompressionPlugin({
+        //   deleteOriginalAssets: true,
+        //   test: /\.(png|jpg|gif|woff|woff2|eot|ttf)$/,
+        //   compressionOptions: {
+        //     numiterations: 15,
+        //   },
+        //   algorithm(input, compressionOptions, callback) {
+        //     return zopfli.gzip(input, compressionOptions, callback);
+        //   },
+        // }),
+        new CompressionPlugin({
+          filename: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: /\.js$ | \.css$ | \.html$/,
+          minRatio: 0.7
+        }),
+
+        new BrotliPlugin({
+          asset: '[path].br[query]',
+          test: /\.(js)$ | \.css$ | \.html$/,
+          minRatio: 0.7
+        }),
+        
         new HtmlWebpackPlugin({
           template: path.resolve('./index.html'),
         }),
-        new ESLintPlugin(options),
-        new CompressionPlugin({
-          filename: "[path][base].br",
-          algorithm: "brotliCompress",
-          test: /\.(js|css|html|svg)$/,
-          compressionOptions: {
-            params: {
-              [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-            },
-          },
-          threshold: 10240,
-          minRatio: 0.8,
-          deleteOriginalAssets: true,
-        }),
-
-        new CompressionPlugin({
-          deleteOriginalAssets: true,
-          test: /\.(png|jpg|gif|woff|woff2|eot|ttf)$/,
-          compressionOptions: {
-            numiterations: 15,
-          },
-          algorithm(input, compressionOptions, callback) {
-            return zopfli.gzip(input, compressionOptions, callback);
-          },
-        })
+        
     ]
 };

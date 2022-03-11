@@ -4,10 +4,7 @@
     "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaVersion": 2016,
-        "sourceType": "module",
-            "ecmaFeatures": {
-                "jsx": true
-        }
+        "sourceType": "module"
     },
     "extends": "react",
     "env": {
